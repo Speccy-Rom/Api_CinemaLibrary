@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'djoser',
+    'drf_yasg',
     'django_filters',
 ]
 
@@ -208,12 +209,6 @@ REST_FRAMEWORK = {
     ),
 }
 
-# smtp
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'artfix13@gmail.com'
-EMAIL_HOST_PASSWORD = '123266'
-EMAIL_PORT = 587
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
@@ -248,3 +243,10 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
+
+# smtp
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'artfix13@gmail.com'
+EMAIL_HOST_PASSWORD = '123266'
+EMAIL_PORT = 587
