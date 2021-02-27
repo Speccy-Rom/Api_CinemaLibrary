@@ -1,5 +1,5 @@
 from django.db import models
-from rest_framework import generics
+from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Movie, Actor
 from .serializers import (
@@ -18,6 +18,7 @@ class MoviesListView(generics.ListAPIView):
     serializer_class = MovieListSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = MovieFilter
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         movies = Movie.objects.filter(draft=False).annotate(
@@ -45,7 +46,6 @@ class AddStarRatingView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(ip=get_client_ip(self.request))
-
 
 
 class ActorListView(generics.ListAPIView):
