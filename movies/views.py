@@ -1,5 +1,6 @@
 from django.db import models
-from rest_framework import generics, permissions, viewsets, renderers
+from rest_framework import viewsets
+# from rest_framework import generics, permissions, renderers
 from django_filters.rest_framework import DjangoFilterBackend
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
@@ -16,13 +17,15 @@ from .serializers import (
     ActorDetailSerializer
 )
 
-from .service import get_client_ip, MovieFilter
+# from .service import get_client_ip, MovieFilter
+from .service import get_client_ip, MovieFilter, PaginationMovies
 
 
 class MovieViewSet(viewsets.ReadOnlyModelViewSet):
     """Вывод списка фильмов"""
     filter_backends = (DjangoFilterBackend,)
     filterset_class = MovieFilter
+    pagination_class = PaginationMovies
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
