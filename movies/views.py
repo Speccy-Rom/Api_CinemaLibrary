@@ -29,13 +29,19 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
     # permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        movies = Movie.objects.filter(draft=False).annotate(
-            rating_user=models.Count("ratings",
-                                     filter=models.Q(ratings__ip=get_client_ip(self.request)))
-        ).annotate(
-            middle_star=models.Sum(models.F('ratings__star')) / models.Count(models.F('ratings'))
+        return (
+            Movie.objects.filter(draft=False)
+            .annotate(
+                rating_user=models.Count(
+                    "ratings",
+                    filter=models.Q(ratings__ip=get_client_ip(self.request)),
+                )
+            )
+            .annotate(
+                middle_star=models.Sum(models.F('ratings__star'))
+                / models.Count(models.F('ratings'))
+            )
         )
-        return movies
 
     def get_serializer_class(self):
         if self.action == 'list':
